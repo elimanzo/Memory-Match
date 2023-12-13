@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useReducer } from 'react';
 
+const SYMBOLS = ['a', 'b', 'c'];
+
 function reducer(state, action) {
   switch (action.type) {
     case 'make-a-guess':
@@ -9,21 +11,38 @@ function reducer(state, action) {
     case 'reset-guess':
       return state;
     case 'reset-game':
-      return state;
+      return getNewState();
   }
   return state;
 }
 
-function getInitialState() {
+function getNewState() {
+  const board = [...SYMBOLS, ...SYMBOLS];
+  shuffle(board);
   return {
-    board: ['a', 'b', 'c', 'a', 'b', 'c'],
+    board,
     revealed: [],
     guesses: 0
   };
 }
 
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const randomIndex = getRandomIndex(i + 1);
+    swap(arr, randomIndex, i);
+  }
+}
+
+function getRandomIndex(len) {
+  return Math.floor(Math.random() * len);
+}
+
+function swap(arr, i, j) {
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+}
+
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, undefined, getInitialState);
+  const [state, dispatch] = useReducer(reducer, undefined, getNewState);
   return (
     <View style={styles.container}>
       <Button
