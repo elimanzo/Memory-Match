@@ -2,7 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useReducer } from 'react';
 
-const SYMBOLS = ['a', 'b', 'c'];
+import Card from './Card';
+
+const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡'];
 
 function reducer(state, action) {
   switch (action.type) {
@@ -49,6 +51,11 @@ export default function App() {
         title='Guess'
         onPress={() => dispatch({ type: 'make-a-guess' })}
       />
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        {state.board.map((symbol) => (
+          <Card symbol={symbol} />
+        ))}
+      </View>
       <Text>{JSON.stringify(state, null, 2)}</Text>
       <StatusBar style='auto' />
     </View>
