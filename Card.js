@@ -1,24 +1,23 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 export default function Card(props) {
   return (
-    <View
-      style={{
-        width: 60,
-        aspectRatio: 1,
-        backgroundColor: 'blue',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 10
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 30
-        }}
-      >
-        {props.symbol}
-      </Text>
+    <View style={styles.cardContainer}>
+      <Text style={styles.cardText}>{props.symbol}</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  cardContainer: {
+    width: 80,
+    aspectRatio: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightblue',
+    borderRadius: 10
+  },
+  cardText: {
+    fontSize: 40
+  }
+});

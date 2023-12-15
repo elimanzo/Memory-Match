@@ -4,7 +4,7 @@ import { useReducer } from 'react';
 
 import Card from './Card';
 
-const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡'];
+const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡', '🍱', '🍛', '🍘'];
 
 function reducer(state, action) {
   switch (action.type) {
@@ -45,18 +45,24 @@ function swap(arr, i, j) {
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, undefined, getNewState);
+
+  const cells = state.board.map((symbol) => <Card symbol={symbol} />);
+  const rows = [];
+  while (cells.length > 0) {
+    rows.push(
+      <View style={styles.rowStyles}>
+        {[cells.pop(), cells.pop(), cells.pop(), cells.pop()]}
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
+      {rows}
       <Button
         title='Guess'
         onPress={() => dispatch({ type: 'make-a-guess' })}
       />
-      <View style={{ flexDirection: 'row', gap: 8 }}>
-        {state.board.map((symbol) => (
-          <Card symbol={symbol} />
-        ))}
-      </View>
-      <Text>{JSON.stringify(state, null, 2)}</Text>
+      <Text>{JSON.stringify([state.guesses, state.revealed], null, 2)}</Text>
       <StatusBar style='auto' />
     </View>
   );
@@ -68,5 +74,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  rowStyles: {
+    flexDirection: 'row',
+    gap: 9,
+    marginVertical: 5
   }
 });
