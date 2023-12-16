@@ -43,16 +43,24 @@ function swap(arr, i, j) {
   [arr[i], arr[j]] = [arr[j], arr[i]];
 }
 
+function Row(props) {
+  return (
+    <View style={styles.row}>
+      {props.symbols.map((symbol) => (
+        <Card symbol={symbol} />
+      ))}
+    </View>
+  );
+}
+
 export default function App() {
   const [state, dispatch] = useReducer(reducer, undefined, getNewState);
 
-  const cells = state.board.map((symbol) => <Card symbol={symbol} />);
+  const cells = [...state.board];
   const rows = [];
   while (cells.length > 0) {
     rows.push(
-      <View style={styles.rowStyles}>
-        {[cells.pop(), cells.pop(), cells.pop(), cells.pop()]}
-      </View>
+      <Row symbols={[cells.pop(), cells.pop(), cells.pop(), cells.pop()]} />
     );
   }
   return (
@@ -75,9 +83,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
-  rowStyles: {
+  row: {
     flexDirection: 'row',
-    gap: 9,
-    marginVertical: 5
+    padding: 6,
+    gap: 12
   }
 });
