@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { useReducer } from 'react';
 
-import Card from './Card';
+import Row from './Row';
+import shuffle from './shuffle';
 
 const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡', '🍱', '🍛', '🍘'];
 
@@ -26,31 +27,6 @@ function getNewState() {
     revealed: [],
     guesses: 0
   };
-}
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const randomIndex = getRandomIndex(i + 1);
-    swap(arr, randomIndex, i);
-  }
-}
-
-function getRandomIndex(len) {
-  return Math.floor(Math.random() * len);
-}
-
-function swap(arr, i, j) {
-  [arr[i], arr[j]] = [arr[j], arr[i]];
-}
-
-function Row(props) {
-  return (
-    <View style={styles.row}>
-      {props.symbols.map((symbol) => (
-        <Card symbol={symbol} />
-      ))}
-    </View>
-  );
 }
 
 export default function App() {
@@ -82,10 +58,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  row: {
-    flexDirection: 'row',
-    padding: 6,
-    gap: 12
   }
 });
