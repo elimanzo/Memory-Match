@@ -1,17 +1,20 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Card({ symbol }) {
+export default function Card({ symbol, dispatch, index, revealed }) {
   return (
     <View>
-      <TouchableOpacity style={styles.cardContainer}>
-        <Text style={styles.cardText}>{symbol}</Text>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={() => dispatch({ type: 'make-a-guess', index })}
+      >
+        <Text style={styles.text}>{revealed.includes(symbol) && symbol}</Text>
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  cardContainer: {
+  container: {
     width: 80,
     aspectRatio: 1,
     justifyContent: 'center',
@@ -19,7 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightblue',
     borderRadius: 10,
   },
-  cardText: {
+  text: {
     fontSize: 40,
   },
 });

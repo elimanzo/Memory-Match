@@ -2,17 +2,25 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 import Row from './Row';
 
-export default function Board({ board }) {
-  const cells = [...board];
+const COLCOUNT = 4;
+
+export default function Board({ board, dispatch, revealed }) {
   const rows = [];
-  while (cells.length > 0) {
+  const rowsLength = Math.ceil(board.length / COLCOUNT);
+
+  for (let i = 0; i < rowsLength; i++) {
+    const index = i * COLCOUNT;
     rows.push(
       <Row
-        key={rows.length + 1}
-        symbols={[cells.pop(), cells.pop(), cells.pop(), cells.pop()]}
+        key={i}
+        symbols={board.slice(index, index + COLCOUNT)}
+        rowIndex={i}
+        dispatch={dispatch}
+        revealed={revealed}
       />,
     );
   }
+
   return <View style={styles.container}>{rows}</View>;
 }
 
