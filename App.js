@@ -4,6 +4,7 @@ import { useReducer } from 'react';
 
 import Row from './Row';
 import shuffle from './shuffle';
+import Board from './Board';
 
 const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡', '🍱', '🍛', '🍘'];
 
@@ -25,23 +26,15 @@ function getNewState() {
   return {
     board,
     revealed: [],
-    guesses: 0
+    guesses: 0,
   };
 }
 
 export default function App() {
   const [state, dispatch] = useReducer(reducer, undefined, getNewState);
-
-  const cells = [...state.board];
-  const rows = [];
-  while (cells.length > 0) {
-    rows.push(
-      <Row symbols={[cells.pop(), cells.pop(), cells.pop(), cells.pop()]} />
-    );
-  }
   return (
     <View style={styles.container}>
-      {rows}
+      <Board board={state.board} />
       <Button
         title='Guess'
         onPress={() => dispatch({ type: 'make-a-guess' })}
@@ -57,6 +50,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });

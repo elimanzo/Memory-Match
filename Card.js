@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Card(props) {
+export default function Card({ symbol }) {
   return (
-    <View style={styles.cardContainer}>
-      <Text style={styles.cardText}>{props.symbol}</Text>
+    <View>
+      <TouchableOpacity style={styles.cardContainer}>
+        <Text style={styles.cardText}>{symbol}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -15,9 +17,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'lightblue',
-    borderRadius: 10
+    borderRadius: 10,
   },
   cardText: {
-    fontSize: 40
-  }
+    fontSize: 40,
+  },
 });
