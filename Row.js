@@ -2,7 +2,13 @@ import { View, StyleSheet } from 'react-native';
 
 import Card from './Card';
 
-export default function Row({ symbols, dispatch, rowIndex, revealed }) {
+export default function Row({
+  symbols,
+  dispatch,
+  rowIndex,
+  revealed,
+  guessIndexes,
+}) {
   return (
     <View style={styles.container}>
       {symbols.map((symbol, i) => (
@@ -12,6 +18,7 @@ export default function Row({ symbols, dispatch, rowIndex, revealed }) {
           dispatch={dispatch}
           index={rowIndex * symbols.length + i}
           revealed={revealed}
+          guessIndexes={guessIndexes}
         />
       ))}
     </View>

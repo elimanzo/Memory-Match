@@ -1,15 +1,21 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function Card({ symbol, dispatch, index, revealed }) {
+export default function Card({
+  symbol,
+  dispatch,
+  index,
+  revealed,
+  guessIndexes,
+}) {
   return (
-    <View>
-      <TouchableOpacity
-        style={styles.container}
-        onPress={() => dispatch({ type: 'make-a-guess', index })}
-      >
-        <Text style={styles.text}>{revealed.includes(symbol) && symbol}</Text>
-      </TouchableOpacity>
-    </View>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={() => dispatch({ type: 'make-a-guess', index })}
+    >
+      {(revealed.includes(symbol) || guessIndexes.includes(index)) && (
+        <Text style={styles.text}>{symbol}</Text>
+      )}
+    </TouchableOpacity>
   );
 }
 

@@ -10,12 +10,24 @@ const SYMBOLS = ['🍚', '🍜', '🍣', '🍙', '🍡', '🍱', '🍛', '🍘']
 function reducer(state, action) {
   switch (action.type) {
     case 'make-a-guess':
+      if (state.guessIndexes.length === 2) {
+        return state;
+      }
       const { index } = action;
-      const newRevealed = [...state.revealed, state.board[index]];
-
-      return { ...state, guesses: state.guesses + 1, revealed: newRevealed };
+      const newGuessIndexes = [...state.guessIndexes, index];
+      return {
+        ...state,
+        guesses: state.guesses + 1,
+        guessIndexes: newGuessIndexes,
+      };
     case 'reset-guess':
-      return state;
+      let newRevealed = state.revealed;
+      const guess1Index = state.guessIndexes.at(-1);
+      const guess2Index = state.guessIndexes.at(-2);
+      if (state.board[guess1Index] === state.board[guess2Index]) {
+        newRevealed = [...state.revealed, state.board[guess1Index]];
+      }
+      return { ...state, revealed: newRevealed, guessIndexes: [] };
     case 'reset-game':
       return getNewState();
   }
@@ -28,7 +40,9 @@ function getNewState() {
   return {
     board,
     revealed: [],
+    guessIndexes: [],
     guesses: 0,
+    isGameOver: false,
   };
 }
 
@@ -40,12 +54,14 @@ export default function App() {
         board={state.board}
         dispatch={dispatch}
         revealed={state.revealed}
+        guessIndexes={state.guessIndexes}
       />
-      <Button
-        title='Guess'
-        onPress={() => dispatch({ type: 'make-a-guess' })}
-      />
-      <Text>{JSON.stringify([state.guesses, state.revealed], null, 2)}</Text>
+      {state.guessIndexes.length === 2 && (
+        <Button
+          title='Guess'
+          onPress={() => dispatch({ type: 'reset-guess' })}
+        />
+      )}
       <StatusBar style='auto' />
     </View>
   );

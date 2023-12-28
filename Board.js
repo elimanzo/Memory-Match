@@ -4,7 +4,7 @@ import Row from './Row';
 
 const COLCOUNT = 4;
 
-export default function Board({ board, dispatch, revealed }) {
+export default function Board({ board, dispatch, revealed, guessIndexes }) {
   const rows = [];
   const rowsLength = Math.ceil(board.length / COLCOUNT);
 
@@ -17,6 +17,7 @@ export default function Board({ board, dispatch, revealed }) {
         rowIndex={i}
         dispatch={dispatch}
         revealed={revealed}
+        guessIndexes={guessIndexes}
       />,
     );
   }
