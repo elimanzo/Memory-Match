@@ -1,3 +1,3 @@
-# Word Scramble
+# Memory Match
 
-![Word Scramble Play](https://i.gyazo.com/a766baa07465b64d95fc015d0eb50166.png)
+![Memory Match](https://i.gyazo.com/41cd30bab66d89d62789f88c0cc9f21d.png)
