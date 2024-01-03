@@ -7,15 +7,19 @@ export default function Card({
   revealed,
   guessIndexes,
 }) {
+  const Container =
+    revealed.includes(symbol) || guessIndexes.includes(index)
+      ? View
+      : TouchableOpacity;
+  const onPress = !(revealed.includes(symbol) || guessIndexes.includes(index))
+    ? () => dispatch({ type: 'make-a-guess', index })
+    : undefined;
   return (
-    <TouchableOpacity
-      style={styles.container}
-      onPress={() => dispatch({ type: 'make-a-guess', index })}
-    >
+    <Container style={styles.container} onPress={onPress}>
       {(revealed.includes(symbol) || guessIndexes.includes(index)) && (
         <Text style={styles.text}>{symbol}</Text>
       )}
-    </TouchableOpacity>
+    </Container>
   );
 }
 
