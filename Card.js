@@ -8,12 +8,19 @@ export default function Card({
   guessIndexes,
 }) {
   const Container =
-    revealed.includes(symbol) || guessIndexes.includes(index)
+    revealed.includes(symbol) ||
+    guessIndexes.includes(index) ||
+    guessIndexes.length === 2
       ? View
       : TouchableOpacity;
-  const onPress = !(revealed.includes(symbol) || guessIndexes.includes(index))
+  const onPress = !(
+    revealed.includes(symbol) ||
+    guessIndexes.includes(index) ||
+    guessIndexes.length === 2
+  )
     ? () => dispatch({ type: 'make-a-guess', index })
     : undefined;
+
   return (
     <Container style={styles.container} onPress={onPress}>
       {(revealed.includes(symbol) || guessIndexes.includes(index)) && (

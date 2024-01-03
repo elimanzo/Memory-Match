@@ -17,7 +17,6 @@ function reducer(state, action) {
       const newGuessIndexes = [...state.guessIndexes, index];
       return {
         ...state,
-        guesses: state.guesses + 1,
         guessIndexes: newGuessIndexes,
       };
     case 'reset-guess':
@@ -27,8 +26,14 @@ function reducer(state, action) {
       if (state.board[guess1Index] === state.board[guess2Index]) {
         newRevealed = [...state.revealed, state.board[guess1Index]];
       }
-      return { ...state, revealed: newRevealed, guessIndexes: [] };
-    case 'reset-game':
+      return {
+        ...state,
+        revealed: newRevealed,
+        guessIndexes: [],
+        isGameOver: SYMBOLS.length === newRevealed.length,
+        guesses: state.guesses + 1,
+      };
+    case 'new-game':
       return getNewState();
   }
   return state;
@@ -50,6 +55,7 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, undefined, getNewState);
   return (
     <View style={styles.container}>
+      <Text style={styles.title}>Memory Match</Text>
       <Board
         board={state.board}
         dispatch={dispatch}
@@ -62,6 +68,17 @@ export default function App() {
           onPress={() => dispatch({ type: 'reset-guess' })}
         />
       )}
+      {state.isGameOver && (
+        <>
+          <Text style={styles.text}>
+            Congratulations! It took you {state.guesses} guesses to win.
+          </Text>
+          <Button
+            title='New Game!'
+            onPress={() => dispatch({ type: 'new-game' })}
+          />
+        </>
+      )}
       <StatusBar style='auto' />
     </View>
   );
@@ -73,5 +90,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 10,
+  },
+  title: {
+    fontSize: 30,
+  },
+  text: {
+    fontSize: 18,
   },
 });
