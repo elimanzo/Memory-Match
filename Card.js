@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'lightblue',
+    backgroundColor: '#BAA9D2',
     borderRadius: 10,
   },
   text: {

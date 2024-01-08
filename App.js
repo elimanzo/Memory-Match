@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useReducer } from 'react';
 
 import shuffle from './shuffle';
@@ -63,20 +63,24 @@ export default function App() {
         guessIndexes={state.guessIndexes}
       />
       {state.guessIndexes.length === 2 && (
-        <Button
-          title='Guess'
+        <TouchableOpacity
           onPress={() => dispatch({ type: 'reset-guess' })}
-        />
+          style={styles.button}
+        >
+          <Text style={styles.buttonText}>Guess</Text>
+        </TouchableOpacity>
       )}
       {state.isGameOver && (
         <>
-          <Text style={styles.text}>
+          <Text style={styles.gameOverText}>
             Congratulations! It took you {state.guesses} guesses to win.
           </Text>
-          <Button
-            title='New Game!'
+          <TouchableOpacity
             onPress={() => dispatch({ type: 'new-game' })}
-          />
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>New Game!</Text>
+          </TouchableOpacity>
         </>
       )}
       <StatusBar style='auto' />
@@ -95,7 +99,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
   },
-  text: {
+  gameOverText: {
+    position: 'absolute',
     fontSize: 18,
+    bottom: 140,
+  },
+  button: {
+    position: 'absolute',
+    bottom: 75,
+    color: 'red',
+    padding: 10,
+    backgroundColor: '#BAA9D2',
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
   },
 });
